@@ -1,7 +1,13 @@
 project('pydflow', 'c', 'cpp')
 
 py = import('python').find_installation()
-pybind = dependency('pybind11')
+deps = []
+deps += dependency('pybind11')
+deps += dependency('doca-common')
+deps += dependency('doca-dpdk-bridge')
+deps += dependency('doca-flow')
+deps += dependency('doca-argp')
+deps += dependency('libdpdk')
 
 inc = include_directories('.')
 
@@ -18,7 +24,7 @@ py.extension_module(
   'pydflow',
   ['bindings.cpp'],
   include_directories: inc,
-  dependencies: [pybind],
+  dependencies: [deps],
   link_with: libexample,
   install: true
 )
