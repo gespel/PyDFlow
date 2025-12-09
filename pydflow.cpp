@@ -1,5 +1,6 @@
 
 #include "pydflow.h"
+#include "doca_error.h"
 
 
 
@@ -7,6 +8,7 @@
 PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
     //doca_error_t result;
 	struct doca_log_backend *sdk_log;
+    struct flow_resources resource = {1};
     
     application_dpdk_config dpdk_config = {
         { 2, 4, 2},
@@ -40,7 +42,13 @@ PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
 	result = dpdk_queues_and_ports_init(&dpdk_config);
 	if (result != DOCA_SUCCESS) {
 		printf("Failed to update ports and queues\n");
+        exit(-1);
 	}
+
+    result = init_doca_flow(2, "vnf,hws", &resource, 0);
+    if (result != DOCA_SUCCESS) {
+        printf("Failed to initialize DOCA Flow\n");
+    }
 }
 
 int PyDFlowWrapper::add_numbers(int a, int b) {
