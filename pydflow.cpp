@@ -2,6 +2,7 @@
 #include "pydflow.h"
 #include "doca_dev.h"
 #include "doca_error.h"
+#include "doca_flow.h"
 #include "flow_common.h"
 
 
@@ -17,6 +18,7 @@ PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
     application_dpdk_config dpdk_config = {
         { 2, 4, 2},
     };
+    struct doca_flow_shared_resource_cfg cfg = { DOCA_FLOW_PIPE_DOMAIN_DEFAULT};
     doca_error_t result;
 
 	result = doca_log_backend_create_standard();
@@ -63,6 +65,12 @@ PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
     result = init_doca_flow_ports(2, ports, true, dev_arr);
     if (result != DOCA_SUCCESS) {
         printf("Failed to init DOCA Flow ports: %s", doca_error_get_descr(result));
+        exit(-1);
+    }
+
+    result = doca_flow_shared_resource_set_cfg(DOCA_FLOW_SHARED_RESOURCE_COUNTER, 0, &cfg);
+    if (result != DOCA_SUCCESS) {
+        printf("Failed to set shared resource set cfg: %s\n", doca_error_get_descr(result));
         exit(-1);
     }
 }
