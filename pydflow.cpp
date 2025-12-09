@@ -1,17 +1,49 @@
-extern "C" {
-#include <stdio.h>
-#include <doca_flow.h>
-#include <doca_dev.h>
-#include "flow_common.h" 
-}
+
 #include "pydflow.h"
 
-int add_numbers(PyDFlowWrapper *wrapper, int a, int b) {
+
+
+
+PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
+    //doca_error_t result;
+	struct doca_log_backend *sdk_log;
+    
+    application_dpdk_config dpdk_config = {
+        { 2, 4, 2},
+    };
+
+    doca_error_t result;
+	result = doca_log_backend_create_standard();
+	result = doca_log_backend_create_with_file_sdk(stderr, &sdk_log);
+	result = doca_log_backend_set_sdk_level(sdk_log, DOCA_LOG_LEVEL_WARNING);
+
+    printf("Starting PyDFlow Wrapper: %s\n", name.c_str());
+
+
+	result = doca_argp_init("doca_flow_lb", NULL);
+	if (result != DOCA_SUCCESS) {
+		printf("Failed to init ARGP resources: %s\n", doca_error_get_descr(result));
+	}
+	doca_argp_set_dpdk_program(dpdk_init);
+    char *n = (char*)name.c_str();
+	char **args = (char**)malloc(sizeof(char*)*16);
+    args[0] = n;
+    result = doca_argp_start(1, args);
+	if (result != DOCA_SUCCESS) {
+		printf("Failed to parse sample input: %s\n", doca_error_get_descr(result));
+	}
+    
+	/*result = dpdk_queues_and_ports_init(&dpdk_config);
+	if (result != DOCA_SUCCESS) {
+		printf("Failed to update ports and queues\n");
+	}*/
+}
+
+int PyDFlowWrapper::add_numbers(int a, int b) {
     return a + b;
 }
 
-void create_testing_pipe(PyDFlowWrapper *wrapper) {
-    struct doca_flow_pipe **pipe;
+void PyDFlowWrapper::create_testing_pipe() {
     struct doca_flow_match match;
     struct doca_flow_match match_mask;
     struct doca_flow_monitor monitor;

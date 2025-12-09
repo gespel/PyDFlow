@@ -1,8 +1,5 @@
 #include <pybind11/pybind11.h>
-
-    #include "pydflow.h"
-
-
+#include "pydflow.h"
 
 namespace py = pybind11;
 
@@ -11,6 +8,6 @@ PYBIND11_MODULE(pydflow, m) {
 
     py::class_<PyDFlowWrapper>(m, "PyDFlow")
         .def(py::init<std::string>())
-        .def("add_numbers", &add_numbers)
-        .def("create_testing_pipe", &create_testing_pipe);
+        .def("add_numbers", &PyDFlowWrapper::add_numbers)
+        .def("create_testing_pipe", &PyDFlowWrapper::create_testing_pipe);
 }
