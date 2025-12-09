@@ -1,6 +1,8 @@
 
 #include "pydflow.h"
+#include "doca_dev.h"
 #include "doca_error.h"
+#include "flow_common.h"
 
 
 
@@ -9,20 +11,21 @@ PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
     //doca_error_t result;
 	struct doca_log_backend *sdk_log;
     struct flow_resources resource = {1};
-    
+    uint32_t nr_shared_resources[SHARED_RESOURCE_NUM_VALUES] = {0};
+    struct doca_dev *dev_arr[1];
+    struct doca_flow_port *ports[2];
     application_dpdk_config dpdk_config = {
         { 2, 4, 2},
     };
-
     doca_error_t result;
+
 	result = doca_log_backend_create_standard();
 	result = doca_log_backend_create_with_file_sdk(stderr, &sdk_log);
 	result = doca_log_backend_set_sdk_level(sdk_log, DOCA_LOG_LEVEL_WARNING);
 
     printf("Starting PyDFlow Wrapper: %s\n", name.c_str());
 
-
-	result = doca_argp_init("doca_flow_lb", NULL);
+	result = doca_argp_init(name.c_str(), NULL);
 	if (result != DOCA_SUCCESS) {
 		printf("Failed to init ARGP resources: %s\n", doca_error_get_descr(result));
 	}
@@ -50,10 +53,18 @@ PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
         exit(-1);
 	}
 
-    /*result = init_doca_flow(4, "vnf,hws", &resource, 0);
+    result = init_doca_flow(4, "vnf,hws", &resource, nr_shared_resources);
     if (result != DOCA_SUCCESS) {
         printf("Failed to initialize DOCA Flow\n");
-    }*/
+    }
+
+    memset(dev_arr, 0, sizeof(struct doca_dev *));
+
+    result = init_doca_flow_ports(2, ports, true, dev_arr);
+    if (result != DOCA_SUCCESS) {
+        printf("Failed to init DOCA Flow ports: %s", doca_error_get_descr(result));
+        exit(-1);
+    }
 }
 
 int PyDFlowWrapper::add_numbers(int a, int b) {
