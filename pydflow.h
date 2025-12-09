@@ -1,10 +1,17 @@
 #ifndef PYDFLOW_H
 #define PYDFLOW_H
+#include <string>
 
-struct PyDFLowWrapper {};
+class PyDFlowWrapper {
+public:
+    PyDFlowWrapper(std::string name) : name(name) {
 
-int add_numbers(struct PyDFLowWrapper *wrapper, int a, int b);
-void create_testing_pipe(struct PyDFLowWrapper *wrapper);
+    }
+    std::string name;
+};
+
+int add_numbers(PyDFlowWrapper *wrapper, int a, int b);
+void create_testing_pipe(PyDFlowWrapper *wrapper);
 
 
 #endif

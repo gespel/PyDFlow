@@ -1,14 +1,16 @@
+extern "C" {
 #include <stdio.h>
 #include <doca_flow.h>
 #include <doca_dev.h>
-#include "flow_common.h"
+#include "flow_common.h" 
+}
 #include "pydflow.h"
 
-int add_numbers(struct PyDFLowWrapper *wrapper, int a, int b) {
+int add_numbers(PyDFlowWrapper *wrapper, int a, int b) {
     return a + b;
 }
 
-void create_testing_pipe(struct PyDFLowWrapper *wrapper) {
+void create_testing_pipe(PyDFlowWrapper *wrapper) {
     struct doca_flow_pipe **pipe;
     struct doca_flow_match match;
     struct doca_flow_match match_mask;

@@ -1,6 +1,6 @@
 project('pydflow', 'c', 'cpp')
 
-cc = meson.get_compiler('c')  # Compiler-Variable definieren
+cc = meson.get_compiler('cpp')  # Compiler-Variable definieren
 
 # Comment this line to restore warnings of experimental DOCA features
 add_project_arguments('-D DOCA_ALLOW_EXPERIMENTAL_API', language: ['c', 'cpp'])
@@ -24,7 +24,7 @@ inc += include_directories('/opt/mellanox/doca/samples')
 inc += include_directories('/opt/mellanox/doca/applications/common/')
 
 srcs = [
-  'pydflow.c',
+  'pydflow.cpp',
 	# Common code for the DOCA library samples
 	'/opt/mellanox/doca/samples/doca_flow/flow_common.c',
 	# Flow switch common code for the DOCA library samples
