@@ -12,5 +12,6 @@ PYBIND11_MODULE(pydflow, m) {
 
     py::class_<PyDFLowWrapper>(m, "PyDFlow")
         .def(py::init<>())
-        .def("add_numbers", &add_numbers);
+        .def("add_numbers", &add_numbers)
+        .def("create_testing_pipe", &create_testing_pipe);
 }
