@@ -28,15 +28,19 @@ PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
     char *n = (char*)name.c_str();
 	char **args = (char**)malloc(sizeof(char*)*16);
     args[0] = n;
-    result = doca_argp_start(1, args);
+    args[1] = (char*)"-a";
+    args[2] = (char*)"0d:00.0,dv_flow_en=2";
+    args[3] = (char*)"-a";
+    args[4] = (char*)"0d:00.1,dv_flow_en=2";
+    result = doca_argp_start(5, args);
 	if (result != DOCA_SUCCESS) {
 		printf("Failed to parse sample input: %s\n", doca_error_get_descr(result));
 	}
     
-	/*result = dpdk_queues_and_ports_init(&dpdk_config);
+	result = dpdk_queues_and_ports_init(&dpdk_config);
 	if (result != DOCA_SUCCESS) {
 		printf("Failed to update ports and queues\n");
-	}*/
+	}
 }
 
 int PyDFlowWrapper::add_numbers(int a, int b) {
