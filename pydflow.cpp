@@ -34,21 +34,26 @@ PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
     args[2] = (char*)"0d:00.0,dv_flow_en=2";
     args[3] = (char*)"-a";
     args[4] = (char*)"0d:00.1,dv_flow_en=2";
-    result = doca_argp_start(5, args);
+    args[5] = (char*)"-c";
+    args[6] = (char*)"0xff";
+    args[7] = (char*)"--";
+    args[8] = (char*)"-l";
+    args[9] = (char*)"70";
+    result = doca_argp_start(10, args);
 	if (result != DOCA_SUCCESS) {
 		printf("Failed to parse sample input: %s\n", doca_error_get_descr(result));
 	}
     
 	result = dpdk_queues_and_ports_init(&dpdk_config);
 	if (result != DOCA_SUCCESS) {
-		printf("Failed to update ports and queues\n");
+		printf("Failed to update ports and queues: %s\n", doca_error_get_descr(result));
         exit(-1);
 	}
 
-    result = init_doca_flow(2, "vnf,hws", &resource, 0);
+    /*result = init_doca_flow(4, "vnf,hws", &resource, 0);
     if (result != DOCA_SUCCESS) {
         printf("Failed to initialize DOCA Flow\n");
-    }
+    }*/
 }
 
 int PyDFlowWrapper::add_numbers(int a, int b) {
