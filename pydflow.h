@@ -23,8 +23,7 @@ public:
     void create_testing_pipe();
 private:
     struct doca_flow_pipe **pipe;
-
-
+    struct doca_flow_port *ports[2];
 };
 
 

@@ -14,7 +14,6 @@ PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
     struct flow_resources resource = {1};
     uint32_t nr_shared_resources[SHARED_RESOURCE_NUM_VALUES] = {0};
     struct doca_dev *dev_arr[1];
-    struct doca_flow_port *ports[2];
     application_dpdk_config dpdk_config = {
         { 2, 4, 2},
     };
@@ -68,11 +67,11 @@ PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
         exit(-1);
     }
 
-    result = doca_flow_shared_resource_set_cfg(DOCA_FLOW_SHARED_RESOURCE_COUNTER, 0, &cfg);
+    /*result = doca_flow_shared_resource_set_cfg(DOCA_FLOW_SHARED_RESOURCE_COUNTER, 0, &cfg);
     if (result != DOCA_SUCCESS) {
         printf("Failed to set shared resource set cfg: %s\n", doca_error_get_descr(result));
         exit(-1);
-    }
+    }*/
 }
 
 int PyDFlowWrapper::add_numbers(int a, int b) {
@@ -109,7 +108,7 @@ void PyDFlowWrapper::create_testing_pipe() {
     actions_arr[0] = &actions0;
 
 
-    result = doca_flow_pipe_cfg_create(&pipe_cfg, 0);
+    result = doca_flow_pipe_cfg_create(&pipe_cfg, ports[0]);
     if (result != DOCA_SUCCESS) {
             printf("Failed to create doca_flow_pipe_cfg: %s\n", doca_error_get_descr(result));
         goto destroy_pipe_cfg;    
