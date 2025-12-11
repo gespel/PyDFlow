@@ -9,6 +9,6 @@ PYBIND11_MODULE(pydflow, m) {
     py::class_<PyDFlow>(m, "PyDFlow")
         .def(py::init<std::string>())
         .def("add_numbers", &PyDFlow::add_numbers)
-        .def("get_port", &PyDFlow::getPort)
+        //.def("get_port", &PyDFlow::getPort)
         .def("create_testing_pipe", &PyDFlow::create_testing_pipe);
 }

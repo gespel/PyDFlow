@@ -3,10 +3,10 @@
 #include "doca_dev.h"
 #include "doca_error.h"
 #include "doca_flow.h"
+#include "doca_log.h"
 #include "flow_common.h"
 
-
-
+DOCA_LOG_REGISTER(0);
 
 PyDFlow::PyDFlow(std::string name) : name(name) {
     //doca_error_t result;
@@ -66,12 +66,6 @@ PyDFlow::PyDFlow(std::string name) : name(name) {
         printf("Failed to init DOCA Flow ports: %s", doca_error_get_descr(result));
         exit(-1);
     }
-
-    /*result = doca_flow_shared_resource_set_cfg(DOCA_FLOW_SHARED_RESOURCE_COUNTER, 0, &cfg);
-    if (result != DOCA_SUCCESS) {
-        printf("Failed to set shared resource set cfg: %s\n", doca_error_get_descr(result));
-        exit(-1);
-    }*/
 }
 
 struct doca_flow_port *PyDFlow::getPort(int portNr) {
@@ -146,7 +140,7 @@ void PyDFlow::create_testing_pipe() {
     fwd_miss.type = DOCA_FLOW_FWD_DROP;
 
     result = doca_flow_pipe_create(pipe_cfg, &fwd, &fwd_miss, pipe);
-
+    DOCA_LOG_INFO("Pipe has been successfully created!");
 destroy_pipe_cfg:
     doca_flow_pipe_cfg_destroy(pipe_cfg);
 
