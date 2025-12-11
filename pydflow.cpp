@@ -99,12 +99,10 @@ void PyDFlow::create_testing_pipe() {
     //match_mask.outer.ip4.src_ip = BE_IPV4_ADDR(0, 0, 0, 1);
     //DOCA_LOG_INFO("%d", match_mask.outer.ip4.src_ip);
 
-
     SET_MAC_ADDR(actions0.outer.eth.dst_mac, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff);
     SET_MAC_ADDR(actions0.outer.eth.src_mac, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff);
 
     actions_arr[0] = &actions0;
-
 
     result = doca_flow_pipe_cfg_create(&pipe_cfg, ports[0]);
     if (result != DOCA_SUCCESS) {
@@ -138,10 +136,11 @@ void PyDFlow::create_testing_pipe() {
     fwd.type = DOCA_FLOW_FWD_PORT;
     fwd.port_id = 1;
     fwd_miss.type = DOCA_FLOW_FWD_DROP;
+
     DOCA_LOG_INFO("Creating pipe now...");
-    
     result = doca_flow_pipe_create(pipe_cfg, &fwd, &fwd_miss, pipe);
     DOCA_LOG_INFO("Pipe has been successfully created!");
+
 destroy_pipe_cfg:
     doca_flow_pipe_cfg_destroy(pipe_cfg);
 

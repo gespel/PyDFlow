@@ -1,4 +1,4 @@
-from build.pydflow import PyDFlow
+from pydflow import PyDFlow
 
 p = PyDFlow("test")
 p.create_testing_pipe()
