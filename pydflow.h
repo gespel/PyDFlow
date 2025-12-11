@@ -15,12 +15,13 @@ extern "C" {
 #include <cstdio>
 }
 
-class PyDFlowWrapper {
+class PyDFlow {
 public:
-    PyDFlowWrapper(std::string name);
+    PyDFlow(std::string name);
     std::string name;
     int add_numbers(int a, int b);
     void create_testing_pipe();
+    struct doca_flow_port *getPort(int portNr);
 private:
     struct doca_flow_pipe **pipe;
     struct doca_flow_port *ports[2];

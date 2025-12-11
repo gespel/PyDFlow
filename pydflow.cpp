@@ -8,7 +8,7 @@
 
 
 
-PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
+PyDFlow::PyDFlow(std::string name) : name(name) {
     //doca_error_t result;
 	struct doca_log_backend *sdk_log;
     struct flow_resources resource = {1};
@@ -74,11 +74,15 @@ PyDFlowWrapper::PyDFlowWrapper(std::string name) : name(name) {
     }*/
 }
 
-int PyDFlowWrapper::add_numbers(int a, int b) {
+struct doca_flow_port *PyDFlow::getPort(int portNr) {
+    return ports[portNr];
+}
+
+int PyDFlow::add_numbers(int a, int b) {
     return a + b;
 }
 
-void PyDFlowWrapper::create_testing_pipe() {
+void PyDFlow::create_testing_pipe() {
     struct doca_flow_match match;
     struct doca_flow_match match_mask;
     struct doca_flow_monitor monitor;
