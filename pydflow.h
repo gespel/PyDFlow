@@ -22,6 +22,7 @@ public:
     int add_numbers(int a, int b);
     void create_testing_pipe();
     struct doca_flow_port *getPort(int portNr);
+    void dumpPipeInformationForPort(int portNr, std::string fileName);
 private:
     struct doca_flow_pipe **pipe;
     struct doca_flow_port *ports[2];

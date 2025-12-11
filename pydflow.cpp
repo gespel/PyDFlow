@@ -138,10 +138,25 @@ void PyDFlow::create_testing_pipe() {
     fwd.type = DOCA_FLOW_FWD_PORT;
     fwd.port_id = 1;
     fwd_miss.type = DOCA_FLOW_FWD_DROP;
-
+    DOCA_LOG_INFO("Creating pipe now...");
+    
     result = doca_flow_pipe_create(pipe_cfg, &fwd, &fwd_miss, pipe);
     DOCA_LOG_INFO("Pipe has been successfully created!");
 destroy_pipe_cfg:
     doca_flow_pipe_cfg_destroy(pipe_cfg);
 
+}
+
+void PyDFlow::dumpPipeInformationForPort(int portNr, std::string fileName) {
+    FILE *fptr;
+
+    // Open a file in writing mode
+    fptr = fopen(fileName.c_str(), "a+");
+    if (fptr == NULL) {
+        printf("Error opening file!\n");
+        return;
+    }
+    DOCA_LOG_INFO("Dumping pipe %i data to file %s...", portNr, fileName.c_str());
+    doca_flow_port_pipes_dump(ports[portNr], fptr);
+    fclose(fptr);
 }

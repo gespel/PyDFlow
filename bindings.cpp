@@ -10,5 +10,6 @@ PYBIND11_MODULE(pydflow, m) {
         .def(py::init<std::string>())
         .def("add_numbers", &PyDFlow::add_numbers)
         //.def("get_port", &PyDFlow::getPort)
-        .def("create_testing_pipe", &PyDFlow::create_testing_pipe);
+        .def("create_testing_pipe", &PyDFlow::create_testing_pipe)
+        .def("dump_pipe_information_for_port", &PyDFlow::dumpPipeInformationForPort);
 }
