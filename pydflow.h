@@ -15,9 +15,9 @@ extern "C" {
 #include <cstdio>
 }
 
-class PyDFlow {
+class PyDFlowPipe {
 public:
-    PyDFlow(std::string name);
+    PyDFlowPipe(std::string name);
     std::string name;
     int add_numbers(int a, int b);
     void create_testing_pipe();

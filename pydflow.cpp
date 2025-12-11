@@ -7,7 +7,7 @@
 
 DOCA_LOG_REGISTER(0);
 
-PyDFlow::PyDFlow(std::string name) : name(name) {
+PyDFlowPipe::PyDFlowPipe(std::string name) : name(name) {
     //doca_error_t result;
 	struct doca_log_backend *sdk_log;
     struct flow_resources resource = {1};
@@ -23,7 +23,7 @@ PyDFlow::PyDFlow(std::string name) : name(name) {
 	result = doca_log_backend_create_with_file_sdk(stderr, &sdk_log);
 	result = doca_log_backend_set_sdk_level(sdk_log, DOCA_LOG_LEVEL_WARNING);
 
-    printf("Starting PyDFlow Wrapper: %s\n", name.c_str());
+    printf("Starting PyDFlowPipe Wrapper: %s\n", name.c_str());
 
 	result = doca_argp_init(name.c_str(), NULL);
 	if (result != DOCA_SUCCESS) {
@@ -67,15 +67,15 @@ PyDFlow::PyDFlow(std::string name) : name(name) {
     }
 }
 
-struct doca_flow_port *PyDFlow::getPort(int portNr) {
+struct doca_flow_port *PyDFlowPipe::getPort(int portNr) {
     return ports[portNr];
 }
 
-int PyDFlow::add_numbers(int a, int b) {
+int PyDFlowPipe::add_numbers(int a, int b) {
     return a + b;
 }
 
-void PyDFlow::create_testing_pipe() {
+void PyDFlowPipe::create_testing_pipe() {
     struct doca_flow_match match;
     struct doca_flow_match match_mask;
     struct doca_flow_monitor monitor;
@@ -145,7 +145,7 @@ destroy_pipe_cfg:
 
 }
 
-void PyDFlow::create_entry() {
+void PyDFlowPipe::create_entry() {
     struct doca_flow_match match;
 	struct doca_flow_actions actions;
 	struct doca_flow_monitor monitor;
@@ -177,7 +177,7 @@ void PyDFlow::create_entry() {
     DOCA_LOG_INFO("Entry successfully added to pipe!");
 }
 
-void PyDFlow::dumpPipeInformationForPort(int portNr, std::string fileName) {
+void PyDFlowPipe::dumpPipeInformationForPort(int portNr, std::string fileName) {
     FILE *fptr;
 
     // Open a file in writing mode
@@ -186,7 +186,7 @@ void PyDFlow::dumpPipeInformationForPort(int portNr, std::string fileName) {
         printf("Error opening file!\n");
         return;
     }
-    DOCA_LOG_INFO("Dumping pipe %i data to file %s...", portNr, fileName.c_str());
+    DOCA_LOG_INFO("Dumping port %i data to file %s...", portNr, fileName.c_str());
     doca_flow_port_pipes_dump(ports[portNr], fptr);
     fclose(fptr);
 }
