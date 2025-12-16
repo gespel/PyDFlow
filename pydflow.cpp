@@ -75,6 +75,10 @@ int PyDFlowPipe::add_numbers(int a, int b) {
     return a + b;
 }
 
+void PyDFlowPipe::create_pipe() {
+    
+}
+
 void PyDFlowPipe::create_testing_pipe() {
     struct doca_flow_match match;
     struct doca_flow_match match_mask;
