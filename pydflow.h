@@ -1,7 +1,6 @@
 #ifndef PYDFLOW_H
 #define PYDFLOW_H
 #include <string>
-#include "pipe.h"
 extern "C" {
 #include <stdlib.h>
 #include <stdio.h>
@@ -15,6 +14,7 @@ extern "C" {
 #include "doca_error.h"
 #include <cstdio>
 }
+#include "pipe.h"
 
 class PyDFlowPipe {
 public:
