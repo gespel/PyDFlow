@@ -7,7 +7,7 @@
 
 DOCA_LOG_REGISTER(0);
 
-PyDFlowPipe::PyDFlowPipe(std::string name) : name(name) {
+PyDFlowPipe::PyDFlowPipe(std::string name, std::string pcie_address_port_a, std::string pcie_address_port_b) : name(name) {
     //doca_error_t result;
 	struct doca_log_backend *sdk_log;
     struct flow_resources resource = {1};

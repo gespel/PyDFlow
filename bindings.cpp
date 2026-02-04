@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include <string>
 #include "pydflow.h"
 
 namespace py = pybind11;
@@ -7,7 +8,7 @@ PYBIND11_MODULE(pydflow, m) {
     m.doc() = "Main PyDFlow bindings";
 
     py::class_<PyDFlowPipe>(m, "PyDFlow")
-        .def(py::init<std::string>())
+        .def(py::init<std::string, std::string, std::string>())
         .def("add_numbers", &PyDFlowPipe::add_numbers)
         //.def("get_port", &PyDFlow::getPort)
         .def("create_testing_pipe", &PyDFlowPipe::create_testing_pipe)
