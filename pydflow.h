@@ -16,9 +16,9 @@ extern "C" {
 }
 #include "pipe.h"
 
-class PyDFlowPipe {
+class PyDFlow {
 public:
-    PyDFlowPipe(std::string name, std::string pcie_address_port_a, std::string pcie_address_port_b);
+    PyDFlow(std::string name, std::string pcie_address_port_a, std::string pcie_address_port_b);
     std::string name;
     int add_numbers(int a, int b);
     void create_pipe();

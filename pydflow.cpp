@@ -7,7 +7,7 @@
 
 DOCA_LOG_REGISTER(0);
 
-struct doca_dev *PyDFlowPipe::open_doca_dev_by_pci(const char *pci_bdf) {
+struct doca_dev *PyDFlow::open_doca_dev_by_pci(const char *pci_bdf) {
     struct doca_devinfo **list;
     uint32_t nb;
     doca_error_t err;
@@ -39,7 +39,7 @@ struct doca_dev *PyDFlowPipe::open_doca_dev_by_pci(const char *pci_bdf) {
     return dev;
 }
 
-PyDFlowPipe::PyDFlowPipe(std::string name, std::string pcie_address_port_a, std::string pcie_address_port_b) : name(name) {
+PyDFlow::PyDFlow(std::string name, std::string pcie_address_port_a, std::string pcie_address_port_b) : name(name) {
     //doca_error_t result;
 	struct doca_log_backend *sdk_log;
     struct flow_resources resource = {};
@@ -56,7 +56,7 @@ PyDFlowPipe::PyDFlowPipe(std::string name, std::string pcie_address_port_a, std:
 	result = doca_log_backend_create_with_file_sdk(stderr, &sdk_log);
 	result = doca_log_backend_set_sdk_level(sdk_log, DOCA_LOG_LEVEL_WARNING);
 
-    printf("Starting PyDFlowPipe Wrapper: %s\n", name.c_str());
+    printf("Starting PyDFlow Wrapper: %s\n", name.c_str());
 
 	result = doca_argp_init(name.c_str(), NULL);
 	if (result != DOCA_SUCCESS) {
@@ -112,19 +112,19 @@ PyDFlowPipe::PyDFlowPipe(std::string name, std::string pcie_address_port_a, std:
     }
 }
 
-struct doca_flow_port *PyDFlowPipe::getPort(int portNr) {
+struct doca_flow_port *PyDFlow::getPort(int portNr) {
     return ports[portNr];
 }
 
-int PyDFlowPipe::add_numbers(int a, int b) {
+int PyDFlow::add_numbers(int a, int b) {
     return a + b;
 }
 
-void PyDFlowPipe::create_pipe() {
+void PyDFlow::create_pipe() {
     
 }
 
-void PyDFlowPipe::create_testing_pipe() {
+void PyDFlow::create_testing_pipe() {
     struct doca_flow_match match;
     struct doca_flow_match match_mask;
     struct doca_flow_monitor monitor;
@@ -194,7 +194,7 @@ destroy_pipe_cfg:
 
 }
 
-void PyDFlowPipe::create_entry() {
+void PyDFlow::create_entry() {
     struct doca_flow_match match;
 	struct doca_flow_actions actions;
 	struct doca_flow_monitor monitor;
@@ -224,7 +224,7 @@ void PyDFlowPipe::create_entry() {
     DOCA_LOG_INFO("Entry successfully added to pipe!");
 }
 
-void PyDFlowPipe::dumpPipeInformationForPort(int portNr, std::string fileName) {
+void PyDFlow::dumpPipeInformationForPort(int portNr, std::string fileName) {
     FILE *fptr;
 
     // Open a file in writing mode
