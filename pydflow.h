@@ -26,6 +26,7 @@ public:
     void create_entry();
     struct doca_flow_port *getPort(int portNr);
     void dumpPipeInformationForPort(int portNr, std::string fileName);
+    struct doca_dev *open_doca_dev_by_pci(const char *pci_addr);
 private:
     struct doca_flow_pipe *pipe;  // Nicht **pipe
     struct doca_flow_port *ports[2];
