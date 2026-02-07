@@ -25,6 +25,7 @@ inc += include_directories('/opt/mellanox/doca/applications/common/')
 
 srcs = [
   'pydflow.cpp',
+  'pipe.cpp',
 	# Common code for the DOCA library samples
 	'/opt/mellanox/doca/samples/doca_flow/flow_common.c',
 	# Flow switch common code for the DOCA library samples

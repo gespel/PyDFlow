@@ -121,7 +121,7 @@ int PyDFlow::add_numbers(int a, int b) {
 }
 
 void PyDFlow::create_pipe() {
-    
+    auto *p = new Pipe(ports);
 }
 
 void PyDFlow::create_testing_pipe() {
@@ -147,8 +147,8 @@ void PyDFlow::create_testing_pipe() {
     //match_mask.outer.ip4.src_ip = BE_IPV4_ADDR(0, 0, 0, 1);
     //DOCA_LOG_INFO("%d", match_mask.outer.ip4.src_ip);
 
-    SET_MAC_ADDR(actions0.outer.eth.dst_mac, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff);
-    SET_MAC_ADDR(actions0.outer.eth.src_mac, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff);
+    /*SET_MAC_ADDR(actions0.outer.eth.dst_mac, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff);
+    SET_MAC_ADDR(actions0.outer.eth.src_mac, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff);*/
 
     actions_arr[0] = &actions0;
 

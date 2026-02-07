@@ -1,6 +1,6 @@
 #include "pipe.h"
 
-Pipe::Pipe() {
+Pipe::Pipe(struct doca_flow_port **ports) {
     struct doca_flow_match match;
     struct doca_flow_match match_mask;
     struct doca_flow_monitor monitor;
@@ -61,9 +61,15 @@ Pipe::Pipe() {
     fwd.port_id = 1;
     fwd_miss.type = DOCA_FLOW_FWD_DROP;
 
-    DOCA_LOG_INFO("Creating pipe now...");
+    printf("[PyDFlow] Creating pipe now...\n");
     result = doca_flow_pipe_create(pipe_cfg, &fwd, &fwd_miss, &pipe);
-    DOCA_LOG_INFO("Pipe has been successfully created!");
+    if (result != DOCA_SUCCESS) {
+            printf("[PyDFlow] Failed to create doca_flow_pipe: %s\n", doca_error_get_descr(result));
+            goto destroy_pipe_cfg;
+    }
+    else {
+        printf("[PyDFlow] Pipe has been successfully created!\n");
+    }
 
 destroy_pipe_cfg:
     doca_flow_pipe_cfg_destroy(pipe_cfg);

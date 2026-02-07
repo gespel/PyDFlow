@@ -13,5 +13,6 @@ PYBIND11_MODULE(pydflow, m) {
         //.def("get_port", &PyDFlow::getPort)
         .def("create_testing_pipe", &PyDFlow::create_testing_pipe)
         .def("create_entry", &PyDFlow::create_entry)
-        .def("dump_pipe_information_for_port", &PyDFlow::dumpPipeInformationForPort);
+        .def("dump_pipe_information_for_port", &PyDFlow::dumpPipeInformationForPort)
+        .def("create_pipe", &PyDFlow::create_pipe);
 }
