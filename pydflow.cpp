@@ -71,7 +71,7 @@ PyDFlow::PyDFlow(std::string name, std::string pcie_address_port_a, std::string 
     std::string pcie_b = pcie_address_port_b + ",dv_flow_en=2";
     
     args[0] = n;
-    args[1] = (char*)"-a";
+    /*args[1] = (char*)"-a";
     args[2] = (char*)pcie_a.c_str();
     args[3] = (char*)"-a";
     args[4] = (char*)pcie_b.c_str();
@@ -79,8 +79,8 @@ PyDFlow::PyDFlow(std::string name, std::string pcie_address_port_a, std::string 
     args[6] = (char*)"0xff";
     args[7] = (char*)"--";
     args[8] = (char*)"-l";
-    args[9] = (char*)"70";
-    result = doca_argp_start(10, args);
+    args[9] = (char*)"70";*/
+    result = doca_argp_start(1, args);
 	if (result != DOCA_SUCCESS) {
 		printf("Failed to parse sample input: %s\n", doca_error_get_descr(result));
 	}
