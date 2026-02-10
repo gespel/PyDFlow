@@ -1,6 +1,8 @@
 from pydflow import PyDFlow
 import time
 
+
+# Creating a DOCA Flow Pipe with the name test and the PCIe addresses of Port 0 and Port 1 of the Bluefield
 p = PyDFlow("test", "03:00.0", "03:00.1")
 p.create_pipe()
 #p.create_testing_pipe()
