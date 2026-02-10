@@ -21,7 +21,7 @@ public:
     PyDFlow(std::string name, std::string pcie_address_port_a, std::string pcie_address_port_b);
     std::string name;
     int add_numbers(int a, int b);
-    void create_pipe();
+    Pipe *create_pipe();
     void create_testing_pipe();
     void create_entry();
     struct doca_flow_port *getPort(int portNr);

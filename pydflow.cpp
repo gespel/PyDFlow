@@ -120,8 +120,9 @@ int PyDFlow::add_numbers(int a, int b) {
     return a + b;
 }
 
-void PyDFlow::create_pipe() {
+Pipe *PyDFlow::create_pipe() {
     auto *p = new Pipe(ports);
+    return p;
 }
 
 void PyDFlow::create_testing_pipe() {
