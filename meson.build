@@ -37,7 +37,7 @@ srcs = [
 ]
 
 # C library
-libexample = library(
+c_lib = library(
   'pydflow_c',
   [srcs],
   dependencies: [deps],
@@ -51,6 +51,6 @@ py.extension_module(
   ['bindings.cpp'],
   include_directories: inc,
   dependencies: [deps],
-  link_with: libexample,
+  link_with: c_lib,
   install: true
 )
