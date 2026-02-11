@@ -16,6 +16,8 @@
 class Pipe {
 public:
     Pipe(struct doca_flow_port **ports);
+    void create_entry();
+
 private:
     struct doca_flow_pipe *pipe;  // Nicht **pipe
     struct doca_flow_port *ports[2];

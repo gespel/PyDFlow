@@ -75,3 +75,33 @@ destroy_pipe_cfg:
     doca_flow_pipe_cfg_destroy(pipe_cfg);
 
 }
+
+void Pipe::create_entry() {
+    struct doca_flow_match match;
+	struct doca_flow_actions actions;
+	struct doca_flow_monitor monitor;
+	struct doca_flow_pipe_entry *entry_mac;
+	struct doca_flow_fwd fwd;
+    struct entries_status status;
+
+	doca_error_t result;
+
+	memset(&match, 0, sizeof(match));
+	memset(&actions, 0, sizeof(actions));
+	memset(&monitor, 0, sizeof(monitor));
+	memset(&fwd, 0, sizeof(fwd));
+    memset(&status, 0, sizeof(status));
+
+	match.outer.ip4.src_ip = BE_IPV4_ADDR(0, 0, 0, 0);
+
+	SET_MAC_ADDR(actions.outer.eth.dst_mac, 0xa0, 0x88, 0xc2, 0xb5, 0xf4, 0x5a);	
+	SET_MAC_ADDR(actions.outer.eth.src_mac, 0xc4, 0x70, 0xbd, 0xa0, 0x56, 0xbd);
+
+    printf("[PyDFlow] Adding entry to pipe...\n");
+	result = doca_flow_pipe_add_entry(0, pipe, &match, 0, &actions, &monitor, &fwd, 0, &status, &entry_mac);
+	if (result != DOCA_SUCCESS) {
+		printf("[PyDFlow] Failed to add entry: %s\n", doca_error_get_descr(result));
+		exit(-1);
+	}
+    printf("[PyDFlow] Entry successfully added to pipe!\n");
+}

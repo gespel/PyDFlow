@@ -10,13 +10,10 @@ PYBIND11_MODULE(pydflow, m) {
 
     py::class_<PyDFlow>(m, "PyDFlow")
         .def(py::init<std::string, std::string, std::string>())
-        .def("add_numbers", &PyDFlow::add_numbers)
-        //.def("get_port", &PyDFlow::getPort)
-        .def("create_testing_pipe", &PyDFlow::create_testing_pipe)
-        .def("create_entry", &PyDFlow::create_entry)
         .def("dump_pipe_information_for_port", &PyDFlow::dumpPipeInformationForPort)
         .def("create_pipe", &PyDFlow::create_pipe);
 
-    py::class_<Pipe>(m, "Pipe");
+    py::class_<Pipe>(m, "Pipe")
+        .def("create_entry", &Pipe::create_entry);
         // Konstruktor ist nicht öffentlich zugänglich - Pipes werden über PyDFlow.create_pipe() erstellt
 }
