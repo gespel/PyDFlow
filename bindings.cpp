@@ -16,4 +16,6 @@ PYBIND11_MODULE(pydflow, m) {
     py::class_<Pipe>(m, "Pipe")
         .def("create_entry", &Pipe::create_entry);
         // Konstruktor ist nicht öffentlich zugänglich - Pipes werden über PyDFlow.create_pipe() erstellt
+
+    py::class_<Entry>(m, "Entry");
 }

@@ -11,12 +11,14 @@
 #include "dpdk_utils.h"
 #include "doca_argp.h"
 #include "doca_error.h"
+#include "entry.h"
 #include <cstdio>
+
 
 class Pipe {
 public:
     Pipe(struct doca_flow_port **ports);
-    void create_entry();
+    Entry *create_entry();
 
 private:
     struct doca_flow_pipe *pipe;  // Nicht **pipe

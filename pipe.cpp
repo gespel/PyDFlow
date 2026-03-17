@@ -76,7 +76,8 @@ destroy_pipe_cfg:
 
 }
 
-void Pipe::create_entry() {
+Entry *Pipe::create_entry() {
+    Entry *out = (Entry*)malloc(sizeof(Entry));
     struct doca_flow_match match;
     struct doca_flow_actions actions;
     struct doca_flow_monitor monitor;
@@ -104,4 +105,5 @@ void Pipe::create_entry() {
         exit(-1);
     }
     printf("[PyDFlow] Entry successfully added to pipe!\n");
+    return out;
 }
