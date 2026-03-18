@@ -6,4 +6,6 @@ import time
 pyd = pydflow.PyDFlow("test", "03:00.0", "03:00.1")
 pipe = pyd.create_pipe()
 pipe.create_entry()
+pipe.create_entry()
+print(len(pipe.get_entries()))
 print(pipe.get_entries())

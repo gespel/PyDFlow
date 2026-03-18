@@ -107,10 +107,12 @@ bool Pipe::create_entry() {
     std::stringstream ss;
     ss << std::hex << 0xa0 << ":" << 0x88 << ":" << 0xc2 << ":" << 0xb5 << ":" << 0xf4 << ":" << 0x5a;
     std::string dM = ss.str();
+    ss.str("");
     ss.clear();
     ss << std::hex << 0xc4 << ":" << 0x70 << ":" << 0xbd << ":" << 0xa0 << ":" << 0x56 << ":" << 0xbd;
     std::string sM = ss.str();
     ss.clear();
+    ss.str("");
 
     Action a(sM, dM);
     Entry e;
@@ -132,12 +134,14 @@ std::vector<std::string> Pipe::getEntries() {
     int i = 0;
 
     for (Entry e : this->entries) {
-        i++;
         ss << "Number: " << i;
         for (Action a : e.getActions()) {
             ss << " Source MAC: " << a.getSrcMac() << " Destination MAC: " << a.getDstMac(); 
         }
         out.push_back(ss.str());
+        ss.str("");
+        ss.clear();
+        i++;
     }
     return out;
 }
