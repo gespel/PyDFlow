@@ -126,6 +126,18 @@ bool Pipe::create_entry() {
     return true;
 }
 
-std::vector<Entry> Pipe::getEntries() {
-    return this->entries;
+std::vector<std::string> Pipe::getEntries() {
+    std::vector<std::string> out;
+    std::stringstream ss;
+    int i = 0;
+
+    for (Entry e : this->entries) {
+        i++;
+        ss << "Number: " << i;
+        for (Action a : e.getActions()) {
+            ss << " Source MAC: " << a.getSrcMac() << " Destination MAC: " << a.getDstMac(); 
+        }
+        out.push_back(ss.str());
+    }
+    return out;
 }

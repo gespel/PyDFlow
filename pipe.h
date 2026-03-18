@@ -19,7 +19,7 @@ class Pipe {
 public:
     Pipe(struct doca_flow_port **ports);
     bool create_entry();
-    std::vector<Entry> getEntries();
+    std::vector<std::string> getEntries();
 
 private:
     struct doca_flow_pipe *pipe;  // Nicht **pipe
