@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "pipe.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <doca_flow.h>
@@ -13,14 +12,17 @@
 #include "doca_error.h"
 #include "entry.h"
 #include <cstdio>
-
+#include <vector>
+#include "action.h"
 
 class Pipe {
 public:
     Pipe(struct doca_flow_port **ports);
-    Entry *create_entry();
+    bool create_entry();
+    std::vector<Entry> getEntries();
 
 private:
     struct doca_flow_pipe *pipe;  // Nicht **pipe
     struct doca_flow_port *ports[2];
+    std::vector<Entry> entries;
 };

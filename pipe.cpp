@@ -1,4 +1,7 @@
 #include "pipe.h"
+#include <ios>
+#include <sstream>
+#include <vector>
 
 Pipe::Pipe(struct doca_flow_port **ports) {
     struct doca_flow_match match;
@@ -76,8 +79,8 @@ destroy_pipe_cfg:
 
 }
 
-Entry *Pipe::create_entry() {
-    Entry *out = (Entry*)malloc(sizeof(Entry));
+bool Pipe::create_entry() {
+    Entry out;
     struct doca_flow_match match;
     struct doca_flow_actions actions;
     struct doca_flow_monitor monitor;
@@ -100,10 +103,29 @@ Entry *Pipe::create_entry() {
 
     printf("[PyDFlow] Adding entry to pipe...\n");
     result = doca_flow_pipe_add_entry(0, pipe, &match, 0, &actions, &monitor, &fwd, 0, &status, &entry_mac);
+    
+    std::stringstream ss;
+    ss << std::hex << 0xa0 << ":" << 0x88 << ":" << 0xc2 << ":" << 0xb5 << ":" << 0xf4 << ":" << 0x5a;
+    std::string dM = ss.str();
+    ss.clear();
+    ss << std::hex << 0xc4 << ":" << 0x70 << ":" << 0xbd << ":" << 0xa0 << ":" << 0x56 << ":" << 0xbd;
+    std::string sM = ss.str();
+    ss.clear();
+
+    Action a(sM, dM);
+    Entry e;
+    e.addAction(a);
+
+    this->entries.push_back(e);
+
     if (result != DOCA_SUCCESS) {
         printf("[PyDFlow] Failed to add entry: %s\n", doca_error_get_descr(result));
-        exit(-1);
+        return false;
     }
     printf("[PyDFlow] Entry successfully added to pipe!\n");
-    return out;
+    return true;
+}
+
+std::vector<Entry> Pipe::getEntries() {
+    return this->entries;
 }

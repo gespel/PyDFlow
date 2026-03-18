@@ -46,7 +46,7 @@ PyDFlow::PyDFlow(std::string name, std::string pcie_address_port_a, std::string 
     resource.mode = DOCA_FLOW_RESOURCE_MODE_SYSTEM;
     uint32_t nr_shared_resources[SHARED_RESOURCE_NUM_VALUES] = {0};
     uint32_t action_mem[2] = {0};
-    struct doca_dev *dev_arr[1];
+    struct doca_dev *dev_arr[2];
     application_dpdk_config dpdk_config = {
         { 2, 4,},
     };
