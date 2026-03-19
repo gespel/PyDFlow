@@ -2,6 +2,8 @@
 #include <ios>
 #include <sstream>
 #include <vector>
+#include "util.h"
+
 
 Pipe::Pipe(struct doca_flow_port **ports) {
     struct doca_flow_match match;
@@ -79,7 +81,7 @@ destroy_pipe_cfg:
 
 }
 
-bool Pipe::create_entry() {
+bool Pipe::create_entry(std::string rewriteSrcMAC, std::string rewriteDstMAC) {
     Entry out;
     struct doca_flow_match match;
     struct doca_flow_actions actions;
@@ -97,6 +99,12 @@ bool Pipe::create_entry() {
     memset(&status, 0, sizeof(status));
 
     match.outer.ip4.src_ip = BE_IPV4_ADDR(0, 0, 0, 0);
+
+    std::vector<std::string> srcSplit = split(rewriteSrcMAC, ":");
+    std::vector<std::string> dstSplit = split(rewriteDstMAC, ":");
+
+    int test = stoi(srcSplit[0], 0, 16);
+    printf("Tester: %d\n", test);
 
     SET_MAC_ADDR(actions.outer.eth.dst_mac, 0xa0, 0x88, 0xc2, 0xb5, 0xf4, 0x5a);	
     SET_MAC_ADDR(actions.outer.eth.src_mac, 0xc4, 0x70, 0xbd, 0xa0, 0x56, 0xbd);

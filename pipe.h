@@ -18,7 +18,7 @@
 class Pipe {
 public:
     Pipe(struct doca_flow_port **ports);
-    bool create_entry();
+    bool create_entry(std::string rewriteSrcMAC, std::string rewriteDstMAC);
     std::vector<std::string> getEntries();
 
 private:
